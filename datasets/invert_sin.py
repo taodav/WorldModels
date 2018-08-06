@@ -9,6 +9,9 @@ class InvertedSineDataset(Dataset):
         super(InvertedSineDataset, self).__init__()
 
         self.n_samples = n_samples
+        self.x_data = None
+        self.y_data = None
+
         self.data = self.generate_data()
 
     def __getitem__(self, idx):
@@ -22,6 +25,7 @@ class InvertedSineDataset(Dataset):
         x_data = np.random.uniform(-10.5, 10.5, self.n_samples)
         y_data = 7 * np.sin(0.75 * x_data) + 0.5 * x_data + epsilon
 
-        x_data = torch.from_numpy(x_data.reshape(self.n_samples, 1)).float().to(device)
-        y_data = torch.from_numpy(y_data.reshape(self.n_samples, 1)).float().to(device)
-        return list(zip(x_data, y_data))
+        self.x_data = torch.from_numpy(y_data.reshape(self.n_samples, 1)).float().to(device)
+        self.y_data = torch.from_numpy(x_data.reshape(self.n_samples, 1)).float().to(device)
+        return list(zip(self.x_data, self.y_data))
+
